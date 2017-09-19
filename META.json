@@ -1,10 +1,10 @@
 {
-   "abstract" : "It's new $module",
+   "abstract" : "Executor of TeamCity build configurations",
    "author" : [
       "Miroslav Tynovsky <tynovsky@avast.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v3.0.13, CPAN::Meta::Converter version 2.150005",
+   "generated_by" : "Minilla/v3.0.10, CPAN::Meta::Converter version 2.150005",
    "license" : [
       "perl_5"
    ],
@@ -33,6 +33,8 @@
       },
       "develop" : {
          "requires" : {
+            "Minilla" : "0",
+            "Module::Build::Tiny" : "0",
             "Test::CPAN::Meta" : "0",
             "Test::MinimumVersion::Fast" : "0.04",
             "Test::PAUSE::Permissions" : "0.04",
@@ -42,7 +44,15 @@
       },
       "runtime" : {
          "requires" : {
-            "perl" : "5.008001"
+            "Cpanel::JSON::XS" : "0",
+            "Future" : "0",
+            "HTTP::Tiny" : "0",
+            "IO::Async::Loop" : "0",
+            "IO::Async::Timer::Periodic" : "0",
+            "IO::Socket::SSL" : "0",
+            "Moose" : "0",
+            "autobox::Core" : "0",
+            "perl" : "5.022"
          }
       },
       "test" : {
@@ -52,7 +62,7 @@
       }
    },
    "release_status" : "unstable",
-   "version" : "0.01",
+   "version" : "0.1.0",
    "x_authority" : "cpan:TYNOVSKY",
    "x_serialization_backend" : "JSON::PP version 2.27300_01"
 }

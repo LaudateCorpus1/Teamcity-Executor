@@ -9,6 +9,8 @@
 /carton.lock
 /.carton/
 /local/
+/.carmel/
+.cpanfile.snapshot
 
 nytprof.out
 nytprof/
