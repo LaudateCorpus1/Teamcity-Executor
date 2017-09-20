@@ -26,12 +26,13 @@ Teamcity::Executor - Executor of TeamCity build configurations
 
     $tc->run('hello_name', { name => 'TeamCity' })->then(
         sub {
-            print "Job succeeded\n";
-            my $greeting = $tc->get_artifact_content('greeting.txt');
+            my ($build) = @_;
+            print "Build succeeded\n";
+            my $greeting = $tc->get_artifact_content($build, 'greeting.txt');
             print "Content of greeting.txt artifact: $greeting\n";
         },
         sub {
-            print "Job failed\n";
+            print "Build failed\n";
             exit 1
         }
     );

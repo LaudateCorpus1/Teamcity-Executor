@@ -1,9 +1,9 @@
 package Teamcity::Executor;
-use 5.022;
+use 5.020;
 use strict;
 use warnings;
 
-our $VERSION = "0.1.0";
+our $VERSION = "0.1.1";
 
 use Moose;
 use autobox::Core;
@@ -157,8 +157,7 @@ sub get_artifact_list($self, $build_result) {
 
     my %artifacts;
     # get individual artifacts URLs
-    my @file_nodes = $json->{file}->@*;
-    for my $node (@file_nodes) {
+    for my $node ($json->{file}->elements) {
         my $content_href = $node->{content}{href};
         my $metadata_href = $node->{content}{href};
         my $name = $node->{name};
@@ -276,12 +275,13 @@ Teamcity::Executor - Executor of TeamCity build configurations
 
     $tc->run('hello_name', { name => 'TeamCity' })->then(
         sub {
-            print "Job succeeded\n";
-            my $greeting = $tc->get_artifact_content('greeting.txt');
+            my ($build) = @_;
+            print "Build succeeded\n";
+            my $greeting = $tc->get_artifact_content($build, 'greeting.txt');
             print "Content of greeting.txt artifact: $greeting\n";
         },
         sub {
-            print "Job failed\n";
+            print "Build failed\n";
             exit 1
         }
     );

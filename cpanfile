@@ -1,4 +1,4 @@
-requires 'perl', '5.022';
+requires 'perl', '5.020';
 
 requires 'Moose';
 requires 'autobox::Core';
