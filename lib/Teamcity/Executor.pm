@@ -213,7 +213,7 @@ sub poll_teamcity_results($self) {
         my $state  = $json->{state};
         my $status = $json->{status};
 
-        say "$build->{name} [$build->{id}]: QUEUED" if ($state eq 'queued');
+        say "$build->{name} [$build->{id}]: QUEUED" if $state eq 'queued';
 
         next if $state ne 'finished';
 
