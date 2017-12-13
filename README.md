@@ -20,16 +20,17 @@ Teamcity::Executor - Executor of TeamCity build configurations
         }
         poll_interval => 10,
         loop => $loop,
-    )
+    );
 
     $tc->register_polling_timer();
 
-    $tc->run('hello_name', { name => 'TeamCity' })->then(
+    my $f = $tc->run('hello_name', { name => 'TeamCity' })->then(
         sub {
             my ($build) = @_;
             print "Build succeeded\n";
-            my $greeting = $tc->get_artifact_content($build, 'greeting.txt');
-            print "Content of greeting.txt artifact: $greeting\n";
+            my $greeting = $tc->get_artifact_content($build, 'artifact_name.txt');
+            print "Content of artifact_name.txt: $greeting\n";
+            exit 0
         },
         sub {
             print "Build failed\n";
