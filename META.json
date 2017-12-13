@@ -75,7 +75,7 @@
          "web" : "https://github.com/avast/Teamcity-Executor"
       }
    },
-   "version" : "0.1.1",
+   "version" : "0.2.0",
    "x_authority" : "cpan:TYNOVSKY",
    "x_contributors" : [
       "tynovsky <tynovsky@seznam.cz>"
