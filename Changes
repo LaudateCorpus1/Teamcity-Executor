@@ -2,7 +2,7 @@ Revision history for Perl extension Teamcity-Executor
 
 {{$NEXT}}
 
-0.2.0
+0.2.0 2017-12-14T11:09:05Z
     - add handling for canceling builds
     - write queued (not running jobs) to output
 
