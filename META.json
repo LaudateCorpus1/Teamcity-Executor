@@ -4,13 +4,13 @@
       "Miroslav Tynovsky <tynovsky@avast.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v3.0.10, CPAN::Meta::Converter version 2.150005",
+   "generated_by" : "Minilla/v3.0.10, CPAN::Meta::Converter version 2.150010",
    "license" : [
       "perl_5"
    ],
    "meta-spec" : {
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
-      "version" : "2"
+      "version" : 2
    },
    "name" : "Teamcity-Executor",
    "no_index" : {
@@ -81,7 +81,8 @@
       "tynovsky <tynovsky@seznam.cz>",
       "Ondřej Hošák <ondrej-hosak@users.noreply.github.com>",
       "Jan Seidl <seidl@avast.com>",
-      "Ondřej Hošák <ondrej.hosak@avast.com>"
+      "Ondřej Hošák <ondrej.hosak@avast.com>",
+      "Jan Seidl <janseidl@volny.cz>"
    ],
-   "x_serialization_backend" : "JSON::PP version 2.27300_01"
+   "x_serialization_backend" : "JSON::PP version 2.94"
 }
