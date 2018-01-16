@@ -52,7 +52,6 @@
             "IO::Async::Loop" : "0",
             "IO::Async::Timer::Periodic" : "0",
             "IO::Socket::SSL" : "0",
-            "Log::Any::Adapter::Dispatch" : "0",
             "Moose" : "0",
             "Try::Tiny::Retry" : "0",
             "autobox::Core" : "0",

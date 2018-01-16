@@ -13,7 +13,6 @@ use IO::Async::Timer::Periodic;
 use Log::Any qw($log);
 use Try::Tiny::Retry;
 
-use feature 'say';
 use feature 'signatures';
 no warnings 'experimental::signatures';
 
@@ -65,23 +64,19 @@ sub http_request ($self, $method, $url, $headers = {}, $content = '') {
     # this code handles the teamcity authentification issues (sometimes authentification fails
     # without a reason)
     retry {
-      $response = $self->http->request(
-          $method, $url,
-          {
-              headers => $headers,
-              content => $content,
-          }
-      );
+        $response = $self->http->request(
+            $method, $url,
+            {
+                headers => $headers,
+                content => $content,
+            }
+        );
 
-      if ($response->{status} == 599) {
-        $log->info("Authentification to teamcity failed, retrying.");
-        die 'Authentification to teamcity failed'
-      }
-    }
-    retry_if  {
-      /^Authentification to teamcity failed/
-    }
-    catch {};
+        if ($response->{status} == 599) {
+            $log->info("Authentification to teamcity failed, retrying.");
+            die 'Authentification to teamcity failed';
+        }
+    };
 
     if (!$response->{success}) {
         die "HTTP $method request to $url failed: " . "$response->{status}: $response->{reason}";
