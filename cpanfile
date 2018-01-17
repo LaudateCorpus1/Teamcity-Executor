@@ -8,6 +8,7 @@ requires 'Future';
 requires 'IO::Socket::SSL';
 requires 'IO::Async::Loop';
 requires 'IO::Async::Timer::Periodic';
+requires 'Try::Tiny::Retry';
 
 on 'test' => sub {
     requires 'Test::More', '0.98';
