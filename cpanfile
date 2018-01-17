@@ -9,6 +9,7 @@ requires 'IO::Socket::SSL';
 requires 'IO::Async::Loop';
 requires 'IO::Async::Timer::Periodic';
 requires 'Try::Tiny::Retry';
+requires 'Log::Any';
 
 on 'test' => sub {
     requires 'Test::More', '0.98';

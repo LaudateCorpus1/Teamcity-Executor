@@ -2,7 +2,7 @@ Revision history for Perl extension Teamcity-Executor
 
 {{$NEXT}}
 
-1.0.0
+1.0.0 2018-01-17T12:56:55Z
     - add any logger to maittain log output
     - add touch method to run teamcity job without waiting for result
     - reworked teamcity future output
