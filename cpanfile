@@ -1,7 +1,6 @@
 requires 'perl', '5.020';
 
 requires 'Moose';
-requires 'autobox::Core';
 requires 'HTTP::Tiny';
 requires 'Cpanel::JSON::XS';
 requires 'Future';

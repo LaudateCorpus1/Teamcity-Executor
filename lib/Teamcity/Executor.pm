@@ -3,10 +3,9 @@ use 5.020;
 use strict;
 use warnings;
 
-our $VERSION = "1.0.0";
+our $VERSION = "1.1.0";
 
 use Moose;
-use autobox::Core;
 use HTTP::Tiny;
 use Cpanel::JSON::XS;
 use IO::Async::Timer::Periodic;
@@ -92,7 +91,7 @@ sub run_teamcity_build ($self, $build_type_id, $properties, $build_name, $wait =
 
     my $xml_properties = '';
 
-    for my $key ($properties->keys) {
+    for my $key (keys %{$properties}) {
         my $value = $properties->{$key};
         $xml_properties .= qq{<property name="$key" value="$value" />\n};
     }
@@ -180,7 +179,7 @@ sub get_artifact_content ($self, $build_result, $artifact_name) {
 
 sub run ($self, $build_name, $properties = {}) {
 
-    my $teamcity_job_parameters = join(', ', map { "$_: '$properties->{$_}'" } $properties->keys);
+    my $teamcity_job_parameters = join(', ', map { "$_: '$properties->{$_}'" } keys %{$properties});
     $log->info("RUN\t$build_name($teamcity_job_parameters)");
 
     my ($f, $id, $url) = $self->run_teamcity_build($self->build_id_mapping->{$build_name}, $properties, $build_name,);
@@ -191,7 +190,7 @@ sub run ($self, $build_name, $properties = {}) {
 }
 
 sub touch ($self, $build_name, $properties = {}) {
-    my $teamcity_job_parameters = join(', ', map { "$_: '$properties->{$_}'" } $properties->keys);
+    my $teamcity_job_parameters = join(', ', map { "$_: '$properties->{$_}'" } keys %{$properties});
     $log->info("TOUCH\t$build_name($teamcity_job_parameters)");
 
     my ($f, $id, $url) = $self->run_teamcity_build($self->build_id_mapping->{$build_name}, $properties, $build_name, 0);
@@ -204,7 +203,7 @@ sub touch ($self, $build_name, $properties = {}) {
 sub poll_teamcity_results($self) {
     $log->info('.');
 
-    for my $build ($self->teamcity_builds->values) {
+    for my $build (values %{$self->teamcity_builds}) {
         my $url = $self->teamcity_auth_url . $build->{status_href};
         my $response = $self->http_request('GET', $url, { 'Accept' => 'application/json' },);
 
