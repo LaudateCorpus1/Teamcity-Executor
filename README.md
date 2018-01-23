@@ -79,4 +79,4 @@ it under the same terms as Perl itself.
 
 # AUTHOR
 
-Miroslav Tynovsky <tynovsky@avast.com>, Ondřej Hošák <ondrej.hosak@avast.com>
+Miroslav Tynovsky <tynovsky@avast.com>
