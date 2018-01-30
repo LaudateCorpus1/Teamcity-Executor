@@ -1,6 +1,8 @@
 Revision history for Perl extension Teamcity-Executor
 
 {{$NEXT}}
+
+1.2.0 2018-01-30T09:08:43Z
   - extend logging of failed jobs
 
 1.1.1 2018-01-23T11:59:53Z
