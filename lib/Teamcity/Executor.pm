@@ -3,7 +3,7 @@ use 5.020;
 use strict;
 use warnings;
 
-our $VERSION = "1.1.1";
+our $VERSION = "1.2.0";
 
 use Moose;
 use HTTP::Tiny;
@@ -215,8 +215,6 @@ sub poll_teamcity_results($self) {
 
         next if $state ne 'finished';
 
-        $log->info("RESULT\t$build->{name} [$build->{id}]: $status ($state)");
-
         my $job_result = {
             id     => $build->{id},
             href   => $build->{href},
@@ -225,6 +223,10 @@ sub poll_teamcity_results($self) {
             output => $json
         };
 
+        my $teamcity_job_parameters = join(', ', map { "$_: '$build->{params}->{$_}'" } keys %{$build->{params}});
+        $log->info("$status\t".$build->{name}."($teamcity_job_parameters)");
+        $log->info("\t[".$build->{id}."]\t".$build->{href});
+        
         if ($status eq 'SUCCESS') {
             $build->{future}->done($job_result);
         }
