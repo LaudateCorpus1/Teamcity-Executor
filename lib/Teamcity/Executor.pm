@@ -3,7 +3,7 @@ use 5.020;
 use strict;
 use warnings;
 
-our $VERSION = "1.2.0";
+our $VERSION = "1.3.0";
 
 use Moose;
 use HTTP::Tiny;
@@ -85,7 +85,7 @@ sub http_request ($self, $method, $url, $headers = {}, $content = '') {
     return $response;
 }
 
-sub run_teamcity_build ($self, $build_type_id, $properties, $build_name, $wait = 1) {
+sub start_teamcity_build ($self, $build_type_id, $properties, $build_name) {
     $build_name //= 'unnamed-build';
 
     my $build_queue_url = $self->teamcity_auth_url . '/httpAuth/app/rest/buildQueue';
@@ -114,7 +114,12 @@ sub run_teamcity_build ($self, $build_type_id, $properties, $build_name, $wait =
         $request_body,
     );
 
-    my $json = decode_json $response->{content};
+    return decode_json $response->{content};
+}
+
+sub run_teamcity_build ($self, $build_type_id, $properties, $build_name, $wait = 1) {
+
+    my $json = $self->start_teamcity_build($build_type_id, $properties, $build_name);
 
     my $build_id          = $json->{id};
     my $build_detail_href = $json->{webUrl};
@@ -197,6 +202,14 @@ sub touch ($self, $build_name, $properties = {}) {
 
     return $f;
 }
+
+sub touch_and_no_wait_for_response ($self, $build_name, $properties = {}) {
+    my $teamcity_job_parameters = join(', ', map { "$_: '$properties->{$_}'" } keys %{$properties});
+    $log->info("TOUCH AND NO WAIT\t$build_name($teamcity_job_parameters)");
+
+    return $self->start_teamcity_build($self->build_id_mapping->{$build_name}, $properties, $build_name);
+}
+
 
 sub poll_teamcity_results($self) {
     $log->info('.');
