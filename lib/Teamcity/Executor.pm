@@ -337,6 +337,11 @@ Teamcity::Executor - Executor of TeamCity build configurations
 
     $loop->run();
 
+    my $resp = $tc->touch_without_future('hello_name', {});
+
+    print "id: $resp->{id}\n";
+    print "webUrl: $resp->{webUrl}\n";
+    print "state: $resp->{output}{state}\n";
 
 =head1 DESCRIPTION
 
