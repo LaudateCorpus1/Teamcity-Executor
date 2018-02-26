@@ -203,11 +203,14 @@ sub touch ($self, $build_name, $properties = {}) {
     return $f;
 }
 
-sub touch_and_no_wait_for_response ($self, $build_name, $properties = {}) {
+sub touch_without_future ($self, $build_name, $properties = {}) {
     my $teamcity_job_parameters = join(', ', map { "$_: '$properties->{$_}'" } keys %{$properties});
-    $log->info("TOUCH AND NO WAIT\t$build_name($teamcity_job_parameters)");
+    $log->info("TOUCH WITHOUT FUTURE\t$build_name($teamcity_job_parameters)");
 
-    return $self->start_teamcity_build($self->build_id_mapping->{$build_name}, $properties, $build_name);
+    my $result_json = $self->start_teamcity_build($self->build_id_mapping->{$build_name}, $properties, $build_name);
+    
+    $log->info("\t[$result_json->{id}]\t$result_json->{webUrl}");
+    return { id => $result_json->{id}, href => $result_json->{webUrl}, status => '', params => $properties, output => '' };
 }
 
 
