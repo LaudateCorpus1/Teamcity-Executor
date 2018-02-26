@@ -210,7 +210,7 @@ sub touch_without_future ($self, $build_name, $properties = {}) {
     my $result_json = $self->start_teamcity_build($self->build_id_mapping->{$build_name}, $properties, $build_name);
     
     $log->info("\t[$result_json->{id}]\t$result_json->{webUrl}");
-    return { id => $result_json->{id}, href => $result_json->{webUrl}, status => '', params => $properties, output => '' };
+    return { id => $result_json->{id}, href => $result_json->{webUrl}, status => '', params => $properties, output => { state => $result_json->{state} } };
 }
 
 
