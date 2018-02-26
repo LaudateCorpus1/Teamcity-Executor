@@ -2,7 +2,7 @@
 
 Teamcity::Executor - Executor of TeamCity build configurations
 
-# SYNOPSIS
+# SYNOPSIS 1 - asynchronous usage
 
     use Teamcity::Executor;
     use IO::Async::Loop;
@@ -64,11 +64,39 @@ Teamcity::Executor - Executor of TeamCity build configurations
 
     $loop->run();
 
+# SYNOPSIS 2 - synchronous usage
+
+    use Teamcity::Executor;
+    use Log::Any::Adapter;
+
+    Log::Any::Adapter->set(
+        'Dispatch',
+        outputs => [
+            [
+                'Screen',
+                min_level => 'debug',
+                stderr    => 1,
+                newline   => 1
+            ]
+        ]
+    );
+
+    my $tc = Teamcity::Executor->new(
+        credentials => {
+            url  => 'https://teamcity.example.com',
+            user => 'user',
+            pass => 'password',
+        },
+        build_id_mapping => {
+            hello_world => 'playground_HelloWorld',
+            hello_name  => 'playground_HelloName',
+        }
+    );
+
     my $resp = $tc->touch_without_future('hello_name', {});
 
     print "id: $resp->{id}\n";
     print "webUrl: $resp->{webUrl}\n";
-    print "state: $resp->{output}{state}\n";
 
 # DESCRIPTION
 

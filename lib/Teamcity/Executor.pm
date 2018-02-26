@@ -210,7 +210,7 @@ sub touch_without_future ($self, $build_name, $properties = {}) {
     my $result_json = $self->start_teamcity_build($self->build_id_mapping->{$build_name}, $properties, $build_name);
     
     $log->info("\t[$result_json->{id}]\t$result_json->{webUrl}");
-    return { id => $result_json->{id}, href => $result_json->{webUrl}, status => '', params => $properties, output => { state => $result_json->{state} } };
+    return { id => $result_json->{id}, href => $result_json->{webUrl}, status => '', params => $properties, output => $result_json };
 }
 
 
@@ -275,7 +275,7 @@ __END__
 
 Teamcity::Executor - Executor of TeamCity build configurations
 
-=head1 SYNOPSIS
+=head1 SYNOPSIS 1 - asynchronous usage
 
     use Teamcity::Executor;
     use IO::Async::Loop;
@@ -337,11 +337,39 @@ Teamcity::Executor - Executor of TeamCity build configurations
 
     $loop->run();
 
+=head1 SYNOPSIS 2 - synchronous usage
+
+    use Teamcity::Executor;
+    use Log::Any::Adapter;
+
+    Log::Any::Adapter->set(
+        'Dispatch',
+        outputs => [
+            [
+                'Screen',
+                min_level => 'debug',
+                stderr    => 1,
+                newline   => 1
+            ]
+        ]
+    );
+
+    my $tc = Teamcity::Executor->new(
+        credentials => {
+            url  => 'https://teamcity.example.com',
+            user => 'user',
+            pass => 'password',
+        },
+        build_id_mapping => {
+            hello_world => 'playground_HelloWorld',
+            hello_name  => 'playground_HelloName',
+        }
+    );
+
     my $resp = $tc->touch_without_future('hello_name', {});
 
     print "id: $resp->{id}\n";
     print "webUrl: $resp->{webUrl}\n";
-    print "state: $resp->{output}{state}\n";
 
 =head1 DESCRIPTION
 
