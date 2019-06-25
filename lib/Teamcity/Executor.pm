@@ -71,7 +71,7 @@ sub http_request ($self, $method, $url, $headers = {}, $content = '') {
             }
         );
 
-        if ($response->{status} == 599) {
+        if ($response->{status} == 599 || ($response->{status} == 401 && !$response->{reason})) {
             $log->info("Authentification to teamcity failed, retrying.");
             die 'Authentification to teamcity failed';
         }
