@@ -3,7 +3,7 @@ use 5.020;
 use strict;
 use warnings;
 
-our $VERSION = "1.3.0";
+our $VERSION = "1.3.1";
 
 use Moose;
 use HTTP::Tiny;
